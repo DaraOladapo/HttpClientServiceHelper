@@ -17,45 +17,45 @@ stages:
     displayName: 'Build for Linux'
     jobs: 
       - job: build
-    pool:
-      vmImage: 'ubuntu-latest'
+        pool:
+          vmImage: 'ubuntu-latest'
 
-      steps:
-      - task: DotNetCoreCLI@2
-        inputs:
-          command: 'restore'
-          projects: '**/*.csproj'
-          feedsToUse: 'select'
-      - task: DotNetCoreCLI@2
-        inputs:
-          command: 'build'
-          projects: '**/*.csproj'
+        steps:
+        - task: DotNetCoreCLI@2
+          inputs:
+            command: 'restore'
+            projects: '**/*.csproj'
+            feedsToUse: 'select'
+        - task: DotNetCoreCLI@2
+          inputs:
+            command: 'build'
+            projects: '**/*.csproj'
 
-      - task: DotNetCoreCLI@2
-        inputs:
-          command: 'publish'
-          publishWebProjects: true
-          arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
-      - task: PublishBuildArtifacts@1
-        inputs:
-          PathtoPublish: '$(build.artifactstagingdirectory)'
-          ArtifactName: 'drop'
-          publishLocation: 'Container'
-      - task: NuGetCommand@2
-        inputs:
-          command: 'pack'
-          packagesToPack: '**/*.csproj'
-          versioningScheme: 'byPrereleaseNumber'
-          majorVersion: '1'
-          minorVersion: '0'
-          patchVersion: '0'
-          includeSymbols: true
-          toolPackage: true
+        - task: DotNetCoreCLI@2
+          inputs:
+            command: 'publish'
+            publishWebProjects: true
+            arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
+        - task: PublishBuildArtifacts@1
+          inputs:
+            PathtoPublish: '$(build.artifactstagingdirectory)'
+            ArtifactName: 'drop'
+            publishLocation: 'Container'
+        - task: NuGetCommand@2
+          inputs:
+            command: 'pack'
+            packagesToPack: '**/*.csproj'
+            versioningScheme: 'byPrereleaseNumber'
+            majorVersion: '1'
+            minorVersion: '0'
+            patchVersion: '0'
+            includeSymbols: true
+            toolPackage: true
 
-      - task: NuGetCommand@2
-        inputs:
-          command: 'push'
-          packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
-          nuGetFeedType: 'internal'
-          publishVstsFeed: '6505fb56-e6a1-4aae-81b9-53fde7845878'
-          allowPackageConflicts: true
+        - task: NuGetCommand@2
+          inputs:
+            command: 'push'
+            packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+            nuGetFeedType: 'internal'
+            publishVstsFeed: '6505fb56-e6a1-4aae-81b9-53fde7845878'
+            allowPackageConflicts: true
