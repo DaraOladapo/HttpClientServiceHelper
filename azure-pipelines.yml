@@ -60,10 +60,10 @@ stages:
             nuGetFeedType: 'internal'
             publishVstsFeed: '$(VSTSArtifactsFeed)'
             allowPackageConflicts: true
-        - task: NuGetToolInstaller@1
-          inputs:
-            versionSpec: 
-            checkLatest: true
+        # - task: NuGetToolInstaller@1
+        #   inputs:
+        #     versionSpec: 
+        #     checkLatest: true
         # - task: NuGetAuthenticate@0
         #   inputs:
         #     nuGetServiceConnections: 'HTTP Client Helper NUGET'
