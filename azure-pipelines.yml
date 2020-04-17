@@ -53,7 +53,9 @@ stages:
             patchVersion: '0'
             includeSymbols: true
             toolPackage: true
-
+        - task: NuGetAuthenticate@0
+          inputs:
+            nuGetServiceConnections: 'HTTP Client Helper NUGET'
         - task: NuGetCommand@2
           inputs:
             command: 'push'
@@ -61,3 +63,11 @@ stages:
             nuGetFeedType: 'internal'
             publishVstsFeed: '6505fb56-e6a1-4aae-81b9-53fde7845878'
             allowPackageConflicts: true
+        - task: NuGetCommand@2
+          inputs:
+            command: 'push'
+            packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+            nuGetFeedType: 'external'
+            publishFeedCredentials: 'HTTP Client Helper NUGET'
+
+        
