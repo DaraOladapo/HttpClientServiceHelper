@@ -9,10 +9,10 @@ variables:
   buildConfiguration: 'Release'
 
 stages:
-  - stage: windowsbuild
-    displayName: 'Build for Windows'
-  - stage: windowsbuild
-    displayName: 'Build for MacOS'
+  # - stage: windowsbuild
+  #   displayName: 'Build for Windows'
+  # - stage: windowsbuild
+  #   displayName: 'Build for MacOS'
   - stage: linuxbuild
     displayName: 'Build for Linux'
     pool:
