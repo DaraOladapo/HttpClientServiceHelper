@@ -64,9 +64,9 @@ stages:
           inputs:
             versionSpec: 
             checkLatest: true
-        - task: NuGetAuthenticate@0
-          inputs:
-            nuGetServiceConnections: 'HTTP Client Helper NUGET'
+        # - task: NuGetAuthenticate@0
+        #   inputs:
+        #     nuGetServiceConnections: 'HTTP Client Helper NUGET'
         - task: NuGetCommand@2
           inputs:
             command: 'push'
