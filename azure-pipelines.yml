@@ -69,7 +69,7 @@ stages:
           displayName: "Package for NUGET"
           inputs:
             command: 'pack'
-            packagesToPack: '**/*.csproj'
+            packagesToPack: '**/**/*.csproj'
             nobuild: true
             versioningScheme: 'off'
         # - task: PublishBuildArtifacts@1
