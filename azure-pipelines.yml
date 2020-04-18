@@ -9,29 +9,53 @@ variables:
   buildConfiguration: 'Release'
 
 stages:
-  # - stage: windowsbuild
-  #   displayName: 'Build for Windows'
+  - stage: windowsbuild
+    displayName: 'Build for Windows'
+    jobs: 
+    - job: build
+      displayName: 'Windows Build'
+      pool:
+        vmImage: 'windows-latest'
+
+      steps:
+      - task: DotNetCoreCLI@2
+        displayName: 'Restore'
+        inputs:
+          command: 'restore'
+          projects: '**/**/*.csproj'
+          feedsToUse: 'select'
+      - task: DotNetCoreCLI@2
+        displayName: "Build"
+        inputs:
+          command: 'build'
+          projects: '**/*.csproj'
+        
+
   # - stage: windowsbuild
   #   displayName: 'Build for MacOS'
   - stage: linuxbuild
     displayName: 'Build for Linux'
     jobs: 
       - job: build
+        displayName: 'Linux Build'
         pool:
           vmImage: 'ubuntu-latest'
 
         steps:
         - task: DotNetCoreCLI@2
+          displayName: 'Restore'
           inputs:
             command: 'restore'
             projects: '**/**/*.csproj'
             feedsToUse: 'select'
         - task: DotNetCoreCLI@2
+          displayName: 'Build'
           inputs:
             command: 'build'
             projects: '**/*.csproj'
 
         - task: DotNetCoreCLI@2
+          displayName: 'Publish Artifacts'
           inputs:
             command: 'publish'
             publishWebProjects: false
@@ -39,11 +63,13 @@ stages:
             arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
             zipAfterPublish: false
         - task: PublishBuildArtifacts@1
+          displayName: 'Drop Artifacts'
           inputs:
             PathtoPublish: '$(build.artifactstagingdirectory)'
             ArtifactName: 'drop'
             publishLocation: 'Container'
         - task: NuGetCommand@2
+          displayName: 'NUGET Pack'
           inputs:
             command: 'pack'
             packagesToPack: '**/**/*.csproj'
@@ -51,6 +77,7 @@ stages:
             includeSymbols: true
             toolPackage: true
         - task: NuGetCommand@2
+          displayName: 'NUGET Push to Azure Artifacts'
           inputs:
             command: 'push'
             packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
@@ -65,6 +92,7 @@ stages:
         #   inputs:
         #     nuGetServiceConnections: 'HTTP Client Helper NUGET'
         - task: NuGetCommand@2
+          displayName: 'NUGET push to Gallery'
           inputs:
             command: 'push'
             packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
