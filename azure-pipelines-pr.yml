@@ -1,5 +1,5 @@
 pr:s
-- develop
+- master
 variables:
   buildConfiguration: 'Release'
 
