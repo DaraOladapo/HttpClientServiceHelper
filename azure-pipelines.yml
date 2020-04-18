@@ -58,13 +58,6 @@ stages:
           inputs:
             versionSpec: 
         - task: DotNetCoreCLI@2
-          displayName: "Package for NUGET"
-          inputs:
-            command: 'pack'
-            packagesToPack: '**/*.csproj'
-            nobuild: true
-            versioningScheme: 'off'
-        - task: DotNetCoreCLI@2
           displayName: 'Publish Artifacts'
           inputs:
             command: 'publish'
@@ -72,6 +65,13 @@ stages:
             projects: '**/**/*.csproj'
             arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
             zipAfterPublish: false
+        - task: DotNetCoreCLI@2
+          displayName: "Package for NUGET"
+          inputs:
+            command: 'pack'
+            packagesToPack: '**/*.csproj'
+            nobuild: true
+            versioningScheme: 'off'
         # - task: PublishBuildArtifacts@1
         #   displayName: 'Drop Artifacts'
         #   inputs:
