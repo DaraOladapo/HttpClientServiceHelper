@@ -9,7 +9,6 @@ stages:
     displayName: 'Build for Windows'
     jobs: 
     - job: build
-      displayName: 'Windows Build'
       pool:
         vmImage: 'windows-latest'
 
@@ -33,7 +32,6 @@ stages:
     displayName: 'Build for Linux'
     jobs: 
       - job: build
-        displayName: 'Linux Build'
         pool:
           vmImage: 'ubuntu-latest'
 
