@@ -71,36 +71,7 @@ stages:
             command: 'pack'
             packagesToPack: '**/**/*.csproj'
             nobuild: true
-            versioningScheme: 'off'
-        # - task: PublishBuildArtifacts@1
-        #   displayName: 'Drop Artifacts'
-        #   inputs:
-        #     PathtoPublish: '$(build.artifactstagingdirectory)'
-        #     ArtifactName: 'drop'
-        #     publishLocation: 'Container'
-        # - task: NuGetCommand@2
-        #   displayName: 'NUGET Pack'
-        #   inputs:
-        #     command: 'pack'
-        #     packagesToPack: '**/**/*.csproj'
-        #     versioningScheme: 'off'
-        #     includeSymbols: true
-        #     toolPackage: true
-        # - task: NuGetCommand@2
-        #   displayName: 'NUGET Push to Azure Artifacts'
-        #   inputs:
-        #     command: 'push'
-        #     packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
-        #     nuGetFeedType: 'internal'
-        #     publishVstsFeed: '$(VSTSArtifactsFeed)'
-        #     allowPackageConflicts: true
-        # - task: NuGetToolInstaller@1
-        #   inputs:
-        #     versionSpec: 
-        #     checkLatest: true
-        # - task: NuGetAuthenticate@0
-        #   inputs:
-        #     nuGetServiceConnections: 'HTTP Client Helper NUGET'
+            versioningScheme: 'byBuildNumber'
         - task: NuGetCommand@2
           displayName: 'NUGET push to Gallery'
           inputs:
