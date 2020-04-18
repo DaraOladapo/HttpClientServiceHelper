@@ -8,7 +8,7 @@
 Use this library to quickly bootstrap your HttpClient Service calls.
 It uses the System.Net.Http library.
 You pass in your routes and objects for the calls - Get, Post, Put, Delete.
-It returns an HttpResponseMessage which you can then utilize in your projects.</Description>
+It returns an HttpResponseMessage/String Response depending on the method called which you can then utilize in your projects.</Description>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <RepositoryUrl>https://github.com/DaraOladapo/HttpClientServiceHelper</RepositoryUrl>
