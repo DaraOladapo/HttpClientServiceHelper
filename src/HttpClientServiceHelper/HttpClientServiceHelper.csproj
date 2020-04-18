@@ -4,12 +4,26 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Authors>Dara Oladapo</Authors>
     <Product>Http ClientService Helper</Product>
-    <Description>.NET HTTP Client Service library.</Description>
+    <Description>.NET HTTP Client Service library.
+Use this library to quickly bootstrap your HttpClient Service calls.
+It uses the System.Net.Http library.
+You pass in your routes and objects for the calls - Get, Post, Put, Delete.
+It returns an HttpResponseMessage which you can then utilize in your projects.</Description>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <RepositoryUrl>https://github.com/DaraOladapo/HttpClientServiceHelper</RepositoryUrl>
+    <ReleaseVersion>0.2</ReleaseVersion>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <CustomCommands>
+      <CustomCommands>
+        <Command>
+          <type>Build</type>
+        </Command>
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
