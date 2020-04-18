@@ -53,6 +53,10 @@ stages:
           inputs:
             command: 'build'
             projects: '**/*.csproj'
+        - task: NuGetToolInstaller@1
+          displayName: 'NUGET Installer'
+          inputs:
+            versionSpec: 
         - task: DotNetCoreCLI@2
           displayName: "Package for NUGET"
           inputs:
