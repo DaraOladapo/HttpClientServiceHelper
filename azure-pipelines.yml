@@ -74,6 +74,7 @@ stages:
             versioningScheme: 'off'
         - task: NuGetCommand@2
           displayName: 'NUGET push to Gallery'
+          condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
           inputs:
             command: 'push'
             packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
