@@ -71,7 +71,7 @@ stages:
             command: 'pack'
             packagesToPack: '**/**/*.csproj'
             nobuild: true
-            versioningScheme: 'byBuildNumber'
+            versioningScheme: 'off'
         - task: NuGetCommand@2
           displayName: 'NUGET push to Gallery'
           inputs:
