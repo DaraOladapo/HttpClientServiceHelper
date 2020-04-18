@@ -18,7 +18,7 @@ Using .NET CLI
 
 Using Package Reference
 
-Copy the following into the .csproj file of your project.
+Copy the following into the .csproj file of your project (using version 1.0.0 as reference).
 
 `<PackageReference Include="HttpClientServiceHelper" Version="1.0.0" />`
 
