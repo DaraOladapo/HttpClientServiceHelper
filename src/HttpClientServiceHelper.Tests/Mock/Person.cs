@@ -14,7 +14,8 @@ namespace HttpClientServiceHelper.Tests.Mock
         {
             return new Person()
             {
-
+                FirstName = "Dara",
+                LastName = "Oladapo"
             };
         }
     }
