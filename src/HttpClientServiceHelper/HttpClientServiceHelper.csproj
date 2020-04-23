@@ -16,6 +16,7 @@ It returns an HttpResponseMessage/String Response depending on the method called
     <Version>1.0.6</Version>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <AssemblyName>Http Client Service Helper</AssemblyName>
+    <PackageId>HttpClientServiceHelper</PackageId>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
