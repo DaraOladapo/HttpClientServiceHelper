@@ -32,7 +32,7 @@ namespace HttpClientServiceHelper
         /// <param name="Route"></param>
         /// <param name="Token"></param>
         /// <returns>An HTTP Reponse Message</returns>
-        public static async Task<HttpResponseMessage> GetWithBearerTokenAsync(string Route, string Token = null)
+        public static async Task<HttpResponseMessage> GetAsync(string Route, string Token = null)
         {
             using (HttpClient httpClient = new HttpClient())
             {
@@ -60,7 +60,7 @@ namespace HttpClientServiceHelper
         /// <param name="Route"></param>
         /// <param name="Token"></param>
         /// <returns>An HTTP Reponse Message</returns>
-        public static async Task<string> GetAsStringWithBearerTokenAsync(string Route, string Token = null)
+        public static async Task<string> GetAsStringAsync(string Route, string Token = null)
         {
             using (HttpClient httpClient = new HttpClient())
             {
