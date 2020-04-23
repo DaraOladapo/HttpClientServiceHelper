@@ -9,6 +9,7 @@ variables:
   buildConfiguration: 'Release'
 
 stages:
+  # - stage: windowsbuild
   - stage: windowsbuild
     displayName: 'Build for Windows'
     jobs: 
@@ -31,8 +32,7 @@ stages:
           projects: '**/*.csproj'
         
 
-  # - stage: windowsbuild
-  #   displayName: 'Build for MacOS'
+  #   displayName: 'Build for Linux'
   - stage: linuxbuild
     displayName: 'Build for Linux'
     jobs: 
@@ -53,6 +53,12 @@ stages:
           inputs:
             command: 'build'
             projects: '**/*.csproj'
+        - task: DotNetCoreCLI@2
+          displayName: 'Test'
+          inputs:
+            command: 'test'
+            projects: '**/**/*.Tests.csproj'
+            testRunTitle: 'Unit Test'
         - task: NuGetToolInstaller@1
           displayName: 'NUGET Installer'
           inputs:
@@ -69,7 +75,7 @@ stages:
           displayName: "Package for NUGET"
           inputs:
             command: 'pack'
-            packagesToPack: '**/**/*.csproj'
+            packagesToPack: '**/**/HttpClientServiceHelper.csproj'
             nobuild: true
             versioningScheme: 'off'
         - task: NuGetCommand@2
