@@ -1,6 +1,10 @@
 # HttpClientServiceHelper
 .NET HTTP Client Service library.
 
+[![Build Status](https://dev.azure.com/daraoladapo/HttpClientServiceHelper/_apis/build/status/HttpClientServiceHelper?branchName=master)](https://dev.azure.com/daraoladapo/HttpClientServiceHelper/_build/latest?definitionId=3&branchName=master)
+
+
+
 Use this library to quickly bootstrap your HttpClient Service calls.
 It uses the System.Net.Http library.
 You pass in your routes and objects for the calls - Get, Post, Put, Delete.
