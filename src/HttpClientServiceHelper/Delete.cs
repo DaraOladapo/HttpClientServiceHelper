@@ -26,7 +26,7 @@ namespace HttpClientServiceHelper
         /// <param name="Route"></param>
         /// <param name="Token"></param>
         /// <returns></returns>
-        public static async Task<HttpResponseMessage> DeleteWithBearerAsync(string Route, string Token = null)
+        public static async Task<HttpResponseMessage> DeleteAsync(string Route, string Token = null)
         {
             using (HttpClient httpClient = new HttpClient())
             {
