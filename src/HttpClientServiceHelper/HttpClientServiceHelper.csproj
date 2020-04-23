@@ -17,6 +17,7 @@ It returns an HttpResponseMessage/String Response depending on the method called
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <AssemblyName>Http Client Service Helper</AssemblyName>
     <PackageId>HttpClientServiceHelper</PackageId>
+    <PackageTags>HTTP Client, HTTP Service</PackageTags>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
