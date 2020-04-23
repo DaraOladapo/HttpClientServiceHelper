@@ -51,7 +51,7 @@ namespace HttpClientServiceHelper
         /// <param name="Route"></param>
         /// <param name="Model"></param>
         /// <returns>a string response of the HTTP Response Message</returns> 
-        public static async Task<string> PostAsyncGetResponseAsStringAsync(string Route, object Model)
+        public static async Task<string> PostAndGetResponseAsStringAsync(string Route, object Model)
         {
             using (HttpClient httpClient = new HttpClient())
             {
@@ -69,7 +69,7 @@ namespace HttpClientServiceHelper
         /// <param name="Model"></param>
         /// <param name="Token"></param>
         /// <returns>a string response of the HTTP Response Message</returns> 
-        public static async Task<string> PostAsyncGetResponseAsStringAsync(string Route, object Model, string Token = null)
+        public static async Task<string> PostAndGetResponseAsStringAsync(string Route, object Model, string Token = null)
         {
             using (HttpClient httpClient = new HttpClient())
             {
