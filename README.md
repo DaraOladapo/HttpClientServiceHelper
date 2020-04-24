@@ -1,8 +1,10 @@
 # HttpClientServiceHelper
 .NET HTTP Client Service library.
 
-[![Build Status](https://dev.azure.com/daraoladapo/HttpClientServiceHelper/_apis/build/status/HttpClientServiceHelper?branchName=master)](https://dev.azure.com/daraoladapo/HttpClientServiceHelper/_build/latest?definitionId=3&branchName=master)
+## Stats and Reports
 
+[![Build Status](https://dev.azure.com/daraoladapo/HttpClientServiceHelper/_apis/build/status/HttpClientServiceHelper?branchName=master)](https://dev.azure.com/daraoladapo/HttpClientServiceHelper/_build/latest?definitionId=3&branchName=master) 
+![Nuget](https://img.shields.io/nuget/dt/HttpClientServiceHelper?label=Total%20NUGET%20Downloads)
 
 
 Use this library to quickly bootstrap your HttpClient Service calls.
