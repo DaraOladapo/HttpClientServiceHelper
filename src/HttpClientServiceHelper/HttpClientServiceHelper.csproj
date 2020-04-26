@@ -12,12 +12,12 @@ It returns an HttpResponseMessage/String Response depending on the method called
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <RepositoryUrl>https://github.com/DaraOladapo/HttpClientServiceHelper</RepositoryUrl>
-    <ReleaseVersion>0.7</ReleaseVersion>
-    <Version>1.0.7</Version>
+    <ReleaseVersion>0.8</ReleaseVersion>
+    <Version>1.0.8</Version>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <AssemblyName>Http Client Service Helper</AssemblyName>
     <PackageId>HttpClientServiceHelper</PackageId>
-    <PackageTags>HTTP Client, HTTP Service</PackageTags>
+    <PackageTags>httpClient, http, System.Net.Http</PackageTags>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
