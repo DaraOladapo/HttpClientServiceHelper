@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HttpClientServiceHelper", "HttpClientServiceHelper\HttpClientServiceHelper.csproj", "{F88E9CF6-6971-4E57-AFB4-B0FDFA0A89EC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpClientServiceHelper", "HttpClientServiceHelper\HttpClientServiceHelper.csproj", "{F88E9CF6-6971-4E57-AFB4-B0FDFA0A89EC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpClientServiceHelper.Tests", "HttpClientServiceHelper.Tests\HttpClientServiceHelper.Tests.csproj", "{4C55FB5A-E55E-4E7C-A9FA-58452F61243F}"
 EndProject
@@ -53,14 +53,6 @@ Global
 		$0.DotNetNamingPolicy = $1
 		$1.DirectoryNamespaceAssociation = PrefixedHierarchical
 		$0.TextStylePolicy = $4
-		$2.inheritsSet = null
-		$2.scope = text/x-csharp
-		$0.CSharpFormattingPolicy = $3
-		$3.scope = text/x-csharp
-		$4.FileWidth = 80
-		$4.TabsToSpaces = True
-		$4.scope = text/plain
-		$0.VersionControlPolicy = $5
 		version = 0.2
 	EndGlobalSection
 EndGlobal
