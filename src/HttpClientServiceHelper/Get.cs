@@ -15,7 +15,7 @@ namespace HttpClientServiceHelper
     public partial class HttpClientHelper
     {
         /// <summary>
-        /// Triggers a GET request with headers to the specified route and retrieves the result as a generic object response.
+        /// Triggers a GET request to the specified route and retrieves the result as a generic object response.
         /// </summary>
         /// <param name="Route"></param>
         /// <returns>An object</returns>
@@ -54,7 +54,7 @@ namespace HttpClientServiceHelper
             }
         }
         /// <summary>
-        /// Triggers a GET request with headers to the specified route and retrieves the result as a generic object response.
+        /// Triggers a GET request with bearer token to the specified route and retrieves the result as a generic object response.
         /// </summary>
         /// <param name="Route"></param>
         /// <returns>An object</returns>
@@ -138,7 +138,7 @@ namespace HttpClientServiceHelper
             }
         }
         /// <summary>
-        /// Triggers a GET request with headers to the specified route and retrieves the result as a generic object response.
+        /// Triggers a GET request with headers and authorization to the specified route and retrieves the result as a generic object response.
         /// </summary>
         /// <param name="Route"></param>
         /// <param name="Headers"></param>
