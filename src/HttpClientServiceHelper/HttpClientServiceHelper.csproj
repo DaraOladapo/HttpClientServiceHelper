@@ -5,15 +5,15 @@
     <Authors>Dara Oladapo</Authors>
     <Product>Http Client Service Helper</Product>
     <Description>.NET HTTP Client Service library.
-Use this library to quickly bootstrap your HttspClient Service calls.
+Use this library to quickly bootstrap your .NET HttpClient Service calls.
 It uses the System.Net.Http library.
-You pass in your routes and objects for the calls - Get, Post, Put, Delete.
+You pass in your routes and objects for the calls - Get, Post, Put, Patch, Delete.
 It returns an HttpResponseMessage/String Response depending on the method called which you can then utilize in your projects.</Description>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <RepositoryUrl>https://github.com/DaraOladapo/HttpClientServiceHelper</RepositoryUrl>
-    <ReleaseVersion>0.8</ReleaseVersion>
-    <Version>1.0.8</Version>
+    <ReleaseVersion>0.9</ReleaseVersion>
+    <Version>1.0.9</Version>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <AssemblyName>Http Client Service Helper</AssemblyName>
     <PackageId>HttpClientServiceHelper</PackageId>
