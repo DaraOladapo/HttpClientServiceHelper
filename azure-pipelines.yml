@@ -60,17 +60,18 @@ stages:
         #     projects: '**/**/*.Tests.csproj'
         #     testRunTitle: 'Unit Test'
         - task: DotNetCoreCLI@2
-          displayName: "dotnet global test tool install"
+          displayName: ".NET Install Global Test Tool"
           inputs:
            command: 'custom'
            custom: 'tool'
            arguments: 'install --global dotnet-reportgenerator-globaltool'
+
         - script: dotnet test **/HttpClientServiceHelper.Tests/HttpClientServiceHelper.Tests.csproj --logger "trx;LogFileName=testresults.trx" /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/Coverage/
-          displayName: 'dotnet test'
+          displayName: '.NET Test'
           
-        - script: reportgenerator "-reports:$(Build.SourcesDirectory)/TestResults/Coverage/coverage.cobertura.xml" "-targetDir:$(Build.SourcesDirectory)/TestResults/Coverage/Reports" -tag:$(Build.BuildNumber) -reportTypes:htmlInline
+        - script: dotnet reportgenerator "-reports:$(Build.SourcesDirectory)/TestResults/Coverage/coverage.cobertura.xml" "-targetDir:$(Build.SourcesDirectory)/TestResults/Coverage/Reports" -tag:$(Build.BuildNumber) -reportTypes:htmlInline
           workingDirectory: $(Build.SourcesDirectory)/src//HttpClientServiceHelper.Tests
-          displayName: 'dotnet reportgenerator'
+          displayName: '.NET Report Generator'
 
         - task: PublishTestResults@2
           inputs:
