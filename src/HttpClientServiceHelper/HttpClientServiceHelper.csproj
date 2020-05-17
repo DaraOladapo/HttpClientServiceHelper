@@ -12,8 +12,8 @@ It returns an HttpResponseMessage/String Response depending on the method called
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <RepositoryUrl>https://github.com/DaraOladapo/HttpClientServiceHelper</RepositoryUrl>
-    <ReleaseVersion>0.9</ReleaseVersion>
-    <Version>1.0.9</Version>
+    <ReleaseVersion>0.10</ReleaseVersion>
+    <Version>1.0.10</Version>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <AssemblyName>Http Client Service Helper</AssemblyName>
     <PackageId>HttpClientServiceHelper</PackageId>

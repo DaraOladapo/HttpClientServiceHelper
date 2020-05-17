@@ -53,16 +53,44 @@ stages:
           inputs:
             command: 'build'
             projects: '**/*.csproj'
+        # - task: DotNetCoreCLI@2
+        #   displayName: 'Test'
+        #   inputs:
+        #     command: 'test'
+        #     projects: '**/**/*.Tests.csproj'
+        #     testRunTitle: 'Unit Test'
         - task: DotNetCoreCLI@2
-          displayName: 'Test'
+          displayName: ".NET Install Global Test Tool"
           inputs:
-            command: 'test'
-            projects: '**/**/*.Tests.csproj'
-            testRunTitle: 'Unit Test'
+           command: 'custom'
+           custom: 'tool'
+           arguments: 'install --global dotnet-reportgenerator-globaltool'
+
+        - script: dotnet test **/HttpClientServiceHelper.Tests/HttpClientServiceHelper.Tests.csproj --logger "trx;LogFileName=testresults.trx" /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/Coverage/
+          displayName: '.NET Test'
+          
+        - script: dotnet reportgenerator "-reports:$(Build.SourcesDirectory)/TestResults/Coverage/coverage.cobertura.xml" "-targetDir:$(Build.SourcesDirectory)/TestResults/Coverage/Reports" -tag:$(Build.BuildNumber) -reportTypes:htmlInline
+          workingDirectory: $(Build.SourcesDirectory)/src//HttpClientServiceHelper.Tests
+          displayName: '.NET Report Generator'
+
+        - task: PublishTestResults@2
+          inputs:
+           testRunner: VSTest
+           testResultsFiles: '**/*.trx'
+           failTaskOnFailedTests: true
+          
+        - task: PublishCodeCoverageResults@1
+          inputs:
+            codeCoverageTool: 'cobertura'
+            summaryFileLocation: $(Build.SourcesDirectory)/TestResults/Coverage/**/coverage.cobertura.xml
+            reportDirectory: $(Build.SourcesDirectory)/TestResults/Coverage/Reports
+            failIfCoverageEmpty: false 
+
         - task: NuGetToolInstaller@1
           displayName: 'NUGET Installer'
           inputs:
             versionSpec: 
+
         - task: DotNetCoreCLI@2
           displayName: 'Publish Artifacts'
           inputs:
@@ -71,6 +99,7 @@ stages:
             projects: '**/**/*.csproj'
             arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
             zipAfterPublish: false
+
         - task: DotNetCoreCLI@2
           displayName: "Package for NUGET"
           inputs:
@@ -78,6 +107,7 @@ stages:
             packagesToPack: '**/**/HttpClientServiceHelper.csproj'
             nobuild: true
             versioningScheme: 'off'
+
         - task: NuGetCommand@2
           displayName: 'NUGET push to Gallery'
           condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
