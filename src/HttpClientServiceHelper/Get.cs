@@ -199,6 +199,21 @@ namespace HttpClientServiceHelper
             }
         }
         /// <summary>
+        /// Triggers a GET request to the specified route with a Bearer Token and retrieves the result as an HTTP Response Message.
+        /// </summary>
+        /// <param name="Route"></param>
+        /// <param name="Token"></param>
+        /// <returns>An HTTP Reponse Message</returns>
+        public static async Task<HttpResponseMessage> GetAsync(string Route, string Token = null)
+        {
+            using (HttpClient httpClient = new HttpClient())
+            {
+                httpClient.DefaultRequestHeaders.Authorization = string.IsNullOrEmpty(Token) ? new AuthenticationHeaderValue("Bearer", Token) : null;
+                var httpResponse = await httpClient.GetAsync(new Uri(Route));
+                return httpResponse;
+            }
+        }
+        /// <summary>
         /// Triggers a GET request with headers to the specified route and retrieves the result as an HTTP Response Message.
         /// </summary>
         /// <param name="Route"></param>
@@ -237,21 +252,7 @@ namespace HttpClientServiceHelper
                 return httpResponse;
             }
         }
-        /// <summary>
-        /// Triggers a GET request to the specified route with a Bearer Token and retrieves the result as an HTTP Response Message.
-        /// </summary>
-        /// <param name="Route"></param>
-        /// <param name="Token"></param>
-        /// <returns>An HTTP Reponse Message</returns>
-        public static async Task<HttpResponseMessage> GetAsync(string Route, string Token = null)
-        {
-            using (HttpClient httpClient = new HttpClient())
-            {
-                httpClient.DefaultRequestHeaders.Authorization = string.IsNullOrEmpty(Token) ? new AuthenticationHeaderValue("Bearer", Token) : null;
-                var httpResponse = await httpClient.GetAsync(new Uri(Route));
-                return httpResponse;
-            }
-        }
+       
         /// <summary>
         /// Triggers a GET request to the specified route and retrieves the result as a string which you can serialize.
         /// </summary>
