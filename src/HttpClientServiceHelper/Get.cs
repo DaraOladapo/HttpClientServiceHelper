@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace HttpClientServiceHelper
@@ -252,7 +251,7 @@ namespace HttpClientServiceHelper
                 return httpResponse;
             }
         }
-       
+
         /// <summary>
         /// Triggers a GET request to the specified route and retrieves the result as a string which you can serialize.
         /// </summary>
