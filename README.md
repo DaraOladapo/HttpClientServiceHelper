@@ -1,3 +1,4 @@
+[![Board Status](https://dev.azure.com/gwldevopsmay/a1bfd668-30a2-40f4-9424-abae233099da/f1a4c149-7dca-4e2e-ae0e-f145415a7eef/_apis/work/boardbadge/fd91b82f-ca4a-4c9a-bdbf-832f19404203)](https://dev.azure.com/gwldevopsmay/a1bfd668-30a2-40f4-9424-abae233099da/_boards/board/t/f1a4c149-7dca-4e2e-ae0e-f145415a7eef/Microsoft.RequirementCategory)
 # HttpClientServiceHelper
 .NET HTTP Client Service library.
 
