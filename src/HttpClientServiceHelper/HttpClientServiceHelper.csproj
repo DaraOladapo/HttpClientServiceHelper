@@ -12,12 +12,14 @@ It returns an HttpResponseMessage/String Response depending on the method called
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <RepositoryUrl>https://github.com/DaraOladapo/HttpClientServiceHelper</RepositoryUrl>
-    <ReleaseVersion>0.10</ReleaseVersion>
-    <Version>1.0.10</Version>
+    <ReleaseVersion>0.11</ReleaseVersion>
+    <Version>1.0.11</Version>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <AssemblyName>Http Client Service Helper</AssemblyName>
     <PackageId>HttpClientServiceHelper</PackageId>
     <PackageTags>httpClient, http, System.Net.Http</PackageTags>
+    <Copyright>Dara Oladapo</Copyright>
+    <PackageIcon>Logo512.png</PackageIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -37,6 +39,11 @@ It returns an HttpResponseMessage/String Response depending on the method called
     <None Include="..\..\LICENSE">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
+    </None>
+    <None Include="Assets\Logo512.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
