@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HttpClientServiceHelper.Models;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
@@ -10,6 +11,8 @@ namespace HttpClientServiceHelper.Tests
     {
         string Route = "https://daraoladapo.com";
         string Token = Guid.NewGuid().ToString();
+        List<Header> Headers = new List<Header>() { new Header() { Name = "SomeHeaderName", Value = "SomeHeaderValue" } };
+
         [Fact]
         public async void DeleteAsync()
         {
@@ -35,6 +38,13 @@ namespace HttpClientServiceHelper.Tests
         public async void DeleteAsync_WithToken()
         {
             var DeleteResponse = await HttpClientHelper.DeleteAsync(Route, Token);
+            Assert.NotNull(DeleteResponse);
+            Assert.IsType<HttpResponseMessage>(DeleteResponse);
+        }
+        [Fact]
+        public async void DeleteAsync_WithHeaders()
+        {
+            var DeleteResponse = await HttpClientHelper.DeleteAsync(Route, Headers);
             Assert.NotNull(DeleteResponse);
             Assert.IsType<HttpResponseMessage>(DeleteResponse);
         }
