@@ -34,12 +34,3 @@ Get the NUGET Package [here](https://www.nuget.org/packages/HttpClientServiceHel
 
 Happy Usage!
 
-## Tabs {.tabset .tabset-fade}
-
-### MacOS
-
-MacOS content
-
-### Windows
-
-Windows Content
