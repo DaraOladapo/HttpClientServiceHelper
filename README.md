@@ -33,4 +33,3 @@ Copy the following into the .csproj file of your project (using version 1.0.0 as
 Get the NUGET Package [here](https://www.nuget.org/packages/HttpClientServiceHelper).
 
 Happy Usage!
-
