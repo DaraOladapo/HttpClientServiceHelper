@@ -178,7 +178,7 @@ namespace HttpClientServiceHelper
                 return await httpResponse.Content.ReadAsStringAsync();
             }
         }
-
+        #region TODO
         /// <summary>
         /// Triggers a Post request to the specified route and retrieves the result as an HTTP Response Message.
         /// </summary>
@@ -366,5 +366,6 @@ namespace HttpClientServiceHelper
         //        }
         //    }
         //}
+        #endregion
     }
 }
