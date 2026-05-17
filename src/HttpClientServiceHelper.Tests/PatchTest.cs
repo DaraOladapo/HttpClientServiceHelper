@@ -1,46 +1,128 @@
-﻿using System;
+using HttpClientServiceHelper.Models;
+using Authorization = HttpClientServiceHelper.Models.Authorization;
+using HttpClientServiceHelper.Tests.Mock;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using HttpClientServiceHelper.Tests.Mock;
+using WireMock.RequestBuilders;
+using WireMock.ResponseBuilders;
+using WireMock.Server;
 using Xunit;
 
 namespace HttpClientServiceHelper.Tests
 {
-    public class PatchTest
+    public class PatchTest : IDisposable
     {
-        string Route = "https://daraoladapo.com";
-        string Token = Guid.NewGuid().ToString();
+        private readonly WireMockServer _server;
+        private readonly string _route;
+        private readonly string _token = Guid.NewGuid().ToString();
+        private readonly List<Header> _customHeaders = new() { new Header { Name = "X-Custom", Value = "custom-value" } };
+        private readonly Authorization _auth = new() { Scheme = "Basic", Parameter = "dXNlcjpwYXNz" };
+
+        public PatchTest()
+        {
+            _server = WireMockServer.Start();
+            _route = _server.Urls[0];
+            _server.Given(Request.Create().WithPath("/").UsingAnyMethod())
+                   .RespondWith(Response.Create().WithStatusCode(200).WithBody("patched"));
+            _server.Given(Request.Create().WithPath("/error").UsingAnyMethod())
+                   .RespondWith(Response.Create().WithStatusCode(400).WithBody("bad request"));
+        }
+
+        public void Dispose() => _server.Dispose();
+
         [Fact]
         public async Task PatchAsync()
         {
-            var _Person = Person.GetPerson();
-            var PatchResponse = await HttpClientHelper.PatchAsync(Route, _Person);
-            Assert.NotNull(PatchResponse);
-            Assert.IsType<HttpResponseMessage>(PatchResponse);
+            var response = await HttpClientHelper.PatchAsync(_route, Person.GetPerson());
+            Assert.NotNull(response);
+            Assert.IsType<HttpResponseMessage>(response);
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
+
         [Fact]
-        public async Task Patch_GetResponseAsStringAsync()
+        public async Task PatchAsync_NoAuth_SendsNonEmptyBody()
         {
-            var _Person = Person.GetPerson();
-            var PatchResponse = await HttpClientHelper.PatchAndGetResponseAsStringAsync(Route, _Person);
-            Assert.NotNull(PatchResponse);
-            Assert.IsType<string>(PatchResponse);
+            await HttpClientHelper.PatchAsync(_route, Person.GetPerson());
+            var entry = _server.LogEntries.Last();
+            Assert.False(entry.RequestMessage.Headers.ContainsKey("Authorization"));
+            Assert.NotNull(entry.RequestMessage.Body);
+            Assert.Contains("FirstName", entry.RequestMessage.Body);
+            Assert.Contains("Dara", entry.RequestMessage.Body);
         }
-        [Fact]
-        public async Task Patch_WithToken_GetResponseAsStringAsync()
-        {
-            var _Person = Person.GetPerson();
-            var PatchResponse = await HttpClientHelper.PatchAndGetResponseAsStringAsync(Route, _Person, Token);
-            Assert.NotNull(PatchResponse);
-            Assert.IsType<string>(PatchResponse);
-        }
+
         [Fact]
         public async Task PatchAsync_WithToken()
         {
-            var _Person = Person.GetPerson();
-            var PatchResponse = await HttpClientHelper.PatchAsync(Route, _Person, Token);
-            Assert.NotNull(PatchResponse);
-            Assert.IsType<HttpResponseMessage>(PatchResponse);
+            var response = await HttpClientHelper.PatchAsync(_route, Person.GetPerson(), _token);
+            Assert.NotNull(response);
+            Assert.IsType<HttpResponseMessage>(response);
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task PatchAsync_WithToken_SendsBearerHeaderAndBody()
+        {
+            await HttpClientHelper.PatchAsync(_route, Person.GetPerson(), _token);
+            var entry = _server.LogEntries.Last();
+            Assert.True(entry.RequestMessage.Headers.ContainsKey("Authorization"));
+            Assert.Contains($"Bearer {_token}", entry.RequestMessage.Headers["Authorization"]);
+            Assert.NotNull(entry.RequestMessage.Body);
+            Assert.Contains("FirstName", entry.RequestMessage.Body);
+        }
+
+        [Fact]
+        public async Task PatchAsync_WithCustomHeaders_SendsHeadersAndBody()
+        {
+            var response = await HttpClientHelper.PatchAsync(_route, Person.GetPerson(), _customHeaders);
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            var entry = _server.LogEntries.Last();
+            Assert.True(entry.RequestMessage.Headers.ContainsKey("X-Custom"));
+            Assert.Contains("custom-value", entry.RequestMessage.Headers["X-Custom"]);
+            Assert.NotNull(entry.RequestMessage.Body);
+            Assert.Contains("FirstName", entry.RequestMessage.Body);
+        }
+
+        [Fact]
+        public async Task PatchAsync_WithAuthorizationObject_SendsSchemeParameterAndBody()
+        {
+            var response = await HttpClientHelper.PatchAsync(_route, Person.GetPerson(), _customHeaders, _auth);
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            var entry = _server.LogEntries.Last();
+            Assert.True(entry.RequestMessage.Headers.ContainsKey("Authorization"));
+            Assert.Contains($"Basic {_auth.Parameter}", entry.RequestMessage.Headers["Authorization"]);
+            Assert.NotNull(entry.RequestMessage.Body);
+            Assert.Contains("FirstName", entry.RequestMessage.Body);
+        }
+
+        [Fact]
+        public async Task Patch_GetResponseAsStringAsync()
+        {
+            var response = await HttpClientHelper.PatchAndGetResponseAsStringAsync(_route, Person.GetPerson());
+            Assert.NotNull(response);
+            Assert.IsType<string>(response);
+            Assert.Equal("patched", response);
+        }
+
+        [Fact]
+        public async Task Patch_WithToken_GetResponseAsStringAsync()
+        {
+            var response = await HttpClientHelper.PatchAndGetResponseAsStringAsync(_route, Person.GetPerson(), _token);
+            Assert.NotNull(response);
+            Assert.IsType<string>(response);
+            var entry = _server.LogEntries.Last();
+            Assert.True(entry.RequestMessage.Headers.ContainsKey("Authorization"));
+            Assert.Contains($"Bearer {_token}", entry.RequestMessage.Headers["Authorization"]);
+        }
+
+        [Fact]
+        public async Task PatchAsync_NonOkResponse_Returns400()
+        {
+            var response = await HttpClientHelper.PatchAsync($"{_route}/error", Person.GetPerson());
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         }
     }
 }
