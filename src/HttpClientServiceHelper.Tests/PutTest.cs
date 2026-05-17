@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace HttpClientServiceHelper.Tests
@@ -12,7 +13,7 @@ namespace HttpClientServiceHelper.Tests
         string Route = "https://daraoladapo.com";
         string Token = Guid.NewGuid().ToString();
         [Fact]
-        public async void PutAsync()
+        public async Task PutAsync()
         {
             var _Person = Person.GetPerson();
             var PutResponse = await HttpClientHelper.PutAsync(Route, _Person);
@@ -20,7 +21,7 @@ namespace HttpClientServiceHelper.Tests
             Assert.IsType<HttpResponseMessage>(PutResponse);
         }
         [Fact]
-        public async void Put_GetResponseAsStringAsync()
+        public async Task Put_GetResponseAsStringAsync()
         {
             var _Person = Person.GetPerson();
             var PutResponse = await HttpClientHelper.PutAndGetResponseAsStringAsync(Route, _Person);
@@ -28,7 +29,7 @@ namespace HttpClientServiceHelper.Tests
             Assert.IsType<string>(PutResponse);
         }
         [Fact]
-        public async void Put_WithToken_GetResponseAsStringAsync()
+        public async Task Put_WithToken_GetResponseAsStringAsync()
         {
             var _Person = Person.GetPerson();
             var PutResponse = await HttpClientHelper.PutAndGetResponseAsStringAsync(Route, _Person, Token);
@@ -36,7 +37,7 @@ namespace HttpClientServiceHelper.Tests
             Assert.IsType<string>(PutResponse);
         }
         [Fact]
-        public async void PutAsync_WithToken()
+        public async Task PutAsync_WithToken()
         {
             var _Person = Person.GetPerson();
             var PutResponse = await HttpClientHelper.PutAsync(Route, _Person, Token);
