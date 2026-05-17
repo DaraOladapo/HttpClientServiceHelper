@@ -26,10 +26,10 @@ jobs:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
       - name: Restore
-        run: dotnet restore
+        run: dotnet restore src/HttpClientServiceHelper.sln
 
       - name: Build
-        run: dotnet build --no-restore --configuration Release
+        run: dotnet build src/HttpClientServiceHelper.sln --no-restore --configuration Release
 
       - name: Test
         run: >-
@@ -80,7 +80,7 @@ jobs:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
       - name: Restore
-        run: dotnet restore
+        run: dotnet restore src/HttpClientServiceHelper.sln
 
       - name: Pack
         run: dotnet pack src/HttpClientServiceHelper/HttpClientServiceHelper.csproj --configuration Release
