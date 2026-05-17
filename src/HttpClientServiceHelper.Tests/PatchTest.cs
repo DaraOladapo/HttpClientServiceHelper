@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Http;
+using System.Threading.Tasks;
 using HttpClientServiceHelper.Tests.Mock;
 using Xunit;
 
@@ -10,7 +11,7 @@ namespace HttpClientServiceHelper.Tests
         string Route = "https://daraoladapo.com";
         string Token = Guid.NewGuid().ToString();
         [Fact]
-        public async void PatchAsync()
+        public async Task PatchAsync()
         {
             var _Person = Person.GetPerson();
             var PatchResponse = await HttpClientHelper.PatchAsync(Route, _Person);
@@ -18,7 +19,7 @@ namespace HttpClientServiceHelper.Tests
             Assert.IsType<HttpResponseMessage>(PatchResponse);
         }
         [Fact]
-        public async void Patch_GetResponseAsStringAsync()
+        public async Task Patch_GetResponseAsStringAsync()
         {
             var _Person = Person.GetPerson();
             var PatchResponse = await HttpClientHelper.PatchAndGetResponseAsStringAsync(Route, _Person);
@@ -26,7 +27,7 @@ namespace HttpClientServiceHelper.Tests
             Assert.IsType<string>(PatchResponse);
         }
         [Fact]
-        public async void Patch_WithToken_GetResponseAsStringAsync()
+        public async Task Patch_WithToken_GetResponseAsStringAsync()
         {
             var _Person = Person.GetPerson();
             var PatchResponse = await HttpClientHelper.PatchAndGetResponseAsStringAsync(Route, _Person, Token);
@@ -34,7 +35,7 @@ namespace HttpClientServiceHelper.Tests
             Assert.IsType<string>(PatchResponse);
         }
         [Fact]
-        public async void PatchAsync_WithToken()
+        public async Task PatchAsync_WithToken()
         {
             var _Person = Person.GetPerson();
             var PatchResponse = await HttpClientHelper.PatchAsync(Route, _Person, Token);

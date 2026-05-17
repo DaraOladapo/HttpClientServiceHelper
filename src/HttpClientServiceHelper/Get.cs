@@ -13,6 +13,7 @@ namespace HttpClientServiceHelper
     /// </summary>
     public partial class HttpClientHelper
     {
+        #region TODO
         /// <summary>
         /// Triggers a GET request to the specified route and retrieves the result as a generic object response.
         /// </summary>
@@ -183,7 +184,7 @@ namespace HttpClientServiceHelper
         //        }
         //    }
         //}
-
+        #endregion
         /// <summary>
         /// Triggers a GET request to the specified route and retrieves the result as an HTTP Response Message.
         /// </summary>

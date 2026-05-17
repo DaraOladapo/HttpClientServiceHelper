@@ -13,7 +13,7 @@ namespace HttpClientServiceHelper.Tests
         string Route = "https://daraoladapo.com";
         string Token = Guid.NewGuid().ToString();
         [Fact]
-        public async void PostAsync()
+        public async Task PostAsync()
         {
             var _Person = Person.GetPerson();
             var PostResponse = await HttpClientHelper.PostAsync(Route, _Person);
@@ -21,7 +21,7 @@ namespace HttpClientServiceHelper.Tests
             Assert.IsType<HttpResponseMessage>(PostResponse);
         }
         [Fact]
-        public async void Post_GetResponseAsStringAsync()
+        public async Task Post_GetResponseAsStringAsync()
         {
             var _Person = Person.GetPerson();
             var PostResponse = await HttpClientHelper.PostAndGetResponseAsStringAsync(Route, _Person);
@@ -29,7 +29,7 @@ namespace HttpClientServiceHelper.Tests
             Assert.IsType<string>(PostResponse);
         }
         [Fact]
-        public async void Post_WithToken_GetResponseAsStringAsync()
+        public async Task Post_WithToken_GetResponseAsStringAsync()
         {
             var _Person = Person.GetPerson();
             var PostResponse = await HttpClientHelper.PostAndGetResponseAsStringAsync(Route, _Person, Token);
@@ -37,7 +37,7 @@ namespace HttpClientServiceHelper.Tests
             Assert.IsType<string>(PostResponse);
         }
         [Fact]
-        public async void PostAsync_WithToken()
+        public async Task PostAsync_WithToken()
         {
             var _Person = Person.GetPerson();
             var PostResponse = await HttpClientHelper.PostAsync(Route, _Person, Token);

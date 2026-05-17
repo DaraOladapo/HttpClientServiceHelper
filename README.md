@@ -1,15 +1,13 @@
 # HttpClientServiceHelper
+
 .NET HTTP Client Service library.
 
 ## Stats and Reports
 
  ![GitHub contributors](https://img.shields.io/github/contributors-anon/daraoladapo/HttpClientServiceHelper)
- [![Build Status](https://dev.azure.com/daraoladapo/HttpClientServiceHelper/_apis/build/status/HttpClientServiceHelper?branchName=master)](https://dev.azure.com/daraoladapo/HttpClientServiceHelper/_build/latest?definitionId=3&branchName=master) 
+ [![Build Status](https://github.com/DaraOladapo/HttpClientServiceHelper/actions/workflows/ci.yml/badge.svg)](https://github.com/DaraOladapo/HttpClientServiceHelper/actions/workflows/ci.yml)
  ![Nuget](https://img.shields.io/nuget/dt/HttpClientServiceHelper?label=Total%20NUGET%20Downloads)
- ![GitHub](https://img.shields.io/github/license/daraoladapo/httpclientservicehelper) 
-
- 
-
+ ![GitHub](https://img.shields.io/github/license/daraoladapo/httpclientservicehelper)
 
 Use this library to quickly bootstrap your HttpClient Service calls.
 It uses the System.Net.Http library.
