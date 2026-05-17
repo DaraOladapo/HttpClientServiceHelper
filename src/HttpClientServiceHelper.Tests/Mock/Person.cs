@@ -6,9 +6,9 @@ namespace HttpClientServiceHelper.Tests.Mock
 {
     public class Person
     {
-        private string FirstName { get; set; }
-        private string LastName { get; set; }
-        private string FullName => $"{FirstName} {LastName}";
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string FullName => $"{FirstName} {LastName}";
 
         public static Person GetPerson()
         {
