@@ -40,7 +40,7 @@ namespace HttpClientServiceHelper
             using (HttpClient httpClient = new HttpClient())
             {
                 var uri = new Uri(Route);
-                httpClient.DefaultRequestHeaders.Authorization = string.IsNullOrEmpty(Token) ? new AuthenticationHeaderValue("Bearer", Token) : null;
+                httpClient.DefaultRequestHeaders.Authorization = !string.IsNullOrEmpty(Token) ? new AuthenticationHeaderValue("Bearer", Token) : null;
                 string jsonTransport = JsonConvert.SerializeObject(Model);
                 var jsonPayload = new StringContent(jsonTransport, Encoding.UTF8, "application/json");
                 var httpResponse = await httpClient.PatchAsync(uri, jsonPayload);
@@ -124,7 +124,7 @@ namespace HttpClientServiceHelper
             using (HttpClient httpClient = new HttpClient())
             {
                 var uri = new Uri(Route);
-                httpClient.DefaultRequestHeaders.Authorization = string.IsNullOrEmpty(Token) ? new AuthenticationHeaderValue("Bearer", Token) : null;
+                httpClient.DefaultRequestHeaders.Authorization = !string.IsNullOrEmpty(Token) ? new AuthenticationHeaderValue("Bearer", Token) : null;
                 string jsonTransport = JsonConvert.SerializeObject(Model);
                 var jsonPayload = new StringContent(jsonTransport, Encoding.UTF8, "application/json");
                 var httpResponse = await httpClient.PatchAsync(uri, jsonPayload);
@@ -234,7 +234,7 @@ namespace HttpClientServiceHelper
         //    using (HttpClient httpClient = new HttpClient())
         //    {
         //        var uri = new Uri(Route);
-        //        httpClient.DefaultRequestHeaders.Authorization = string.IsNullOrEmpty(Token) ? new AuthenticationHeaderValue("Bearer", Token) : null;
+        //        httpClient.DefaultRequestHeaders.Authorization = !string.IsNullOrEmpty(Token) ? new AuthenticationHeaderValue("Bearer", Token) : null;
         //        string jsonTransport = JsonConvert.SerializeObject(Model);
         //        var jsonPayload = new StringContent(jsonTransport, Encoding.UTF8, "application/json");
         //        var httpResponse = await httpClient.PatchAsync(uri, jsonPayload);

@@ -62,7 +62,7 @@ namespace HttpClientServiceHelper
         //{
         //    using (HttpClient httpClient = new HttpClient())
         //    {
-        //        httpClient.DefaultRequestHeaders.Authorization = string.IsNullOrEmpty(Token) ? new AuthenticationHeaderValue("Bearer", Token) : null;
+        //        httpClient.DefaultRequestHeaders.Authorization = !string.IsNullOrEmpty(Token) ? new AuthenticationHeaderValue("Bearer", Token) : null;
         //        var httpResponse = await httpClient.GetAsync(new Uri(Route));
         //        if (httpResponse.IsSuccessStatusCode)
         //        {
@@ -208,7 +208,7 @@ namespace HttpClientServiceHelper
         {
             using (HttpClient httpClient = new HttpClient())
             {
-                httpClient.DefaultRequestHeaders.Authorization = string.IsNullOrEmpty(Token) ? new AuthenticationHeaderValue("Bearer", Token) : null;
+                httpClient.DefaultRequestHeaders.Authorization = !string.IsNullOrEmpty(Token) ? new AuthenticationHeaderValue("Bearer", Token) : null;
                 var httpResponse = await httpClient.GetAsync(new Uri(Route));
                 return httpResponse;
             }
@@ -276,7 +276,7 @@ namespace HttpClientServiceHelper
         {
             using (HttpClient httpClient = new HttpClient())
             {
-                httpClient.DefaultRequestHeaders.Authorization = string.IsNullOrEmpty(Token) ? new AuthenticationHeaderValue("Bearer", Token) : null;
+                httpClient.DefaultRequestHeaders.Authorization = !string.IsNullOrEmpty(Token) ? new AuthenticationHeaderValue("Bearer", Token) : null;
                 var httpResponse = await httpClient.GetAsync(new Uri(Route));
                 return await httpResponse.Content.ReadAsStringAsync();
             }
