@@ -36,10 +36,10 @@ jobs:
           dotnet test src/HttpClientServiceHelper.Tests/HttpClientServiceHelper.Tests.csproj
           --no-build --configuration Release
           --logger trx
-          --results-directory TestResults
+          --results-directory ${{ github.workspace }}/TestResults
           /p:CollectCoverage=true
           /p:CoverletOutputFormat=cobertura
-          /p:CoverletOutput=TestResults/coverage.cobertura.xml
+          "/p:CoverletOutput=${{ github.workspace }}/TestResults/coverage.cobertura.xml"
 
       - name: Install report generator
         run: dotnet tool install --global dotnet-reportgenerator-globaltool
@@ -47,8 +47,8 @@ jobs:
       - name: Generate coverage report
         run: >-
           reportgenerator
-          "-reports:TestResults/coverage.cobertura.xml"
-          "-targetDir:TestResults/CoverageReport"
+          "-reports:${{ github.workspace }}/TestResults/coverage.cobertura.xml"
+          "-targetDir:${{ github.workspace }}/TestResults/CoverageReport"
           -reportTypes:htmlInline
 
       - name: Upload test results
@@ -56,14 +56,14 @@ jobs:
         if: always()
         with:
           name: test-results-${{ matrix.os }}
-          path: TestResults/*.trx
+          path: ${{ github.workspace }}/TestResults/*.trx
 
       - name: Upload coverage report
         uses: actions/upload-artifact@v4
         if: always()
         with:
           name: coverage-report-${{ matrix.os }}
-          path: TestResults/CoverageReport
+          path: ${{ github.workspace }}/TestResults/CoverageReport
 
   publish:
     name: Publish to NuGet
