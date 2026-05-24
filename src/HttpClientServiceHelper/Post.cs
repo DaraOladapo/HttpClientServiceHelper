@@ -1,4 +1,4 @@
-﻿using HttpClientServiceHelper.Models;
+using HttpClientServiceHelper.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -19,14 +19,9 @@ namespace HttpClientServiceHelper
         /// <returns>an HTTP Response Message</returns>
         public static async Task<HttpResponseMessage> PostAsync(string Route, object Model)
         {
-            using (HttpClient httpClient = new HttpClient())
-            {
-                var uri = new Uri(Route);
-                string jsonTransport = JsonConvert.SerializeObject(Model);
-                var jsonPayload = new StringContent(jsonTransport, Encoding.UTF8, "application/json");
-                var httpResponse = await httpClient.PostAsync(uri, jsonPayload);
-                return httpResponse;
-            }
+            var request = new HttpRequestMessage(HttpMethod.Post, new Uri(Route));
+            request.Content = new StringContent(JsonConvert.SerializeObject(Model), Encoding.UTF8, "application/json");
+            return await _httpClient.SendAsync(request);
         }
         /// <summary>
         /// Triggers a Post request to the specified route and retrieves the result as an HTTP Response Message
@@ -37,15 +32,11 @@ namespace HttpClientServiceHelper
         /// <returns>an HTTP Response Message</returns>
         public static async Task<HttpResponseMessage> PostAsync(string Route, object Model, string Token = null)
         {
-            using (HttpClient httpClient = new HttpClient())
-            {
-                var uri = new Uri(Route);
-                httpClient.DefaultRequestHeaders.Authorization = !string.IsNullOrEmpty(Token) ? new AuthenticationHeaderValue("Bearer", Token) : null;
-                string jsonTransport = JsonConvert.SerializeObject(Model);
-                var jsonPayload = new StringContent(jsonTransport, Encoding.UTF8, "application/json");
-                var httpResponse = await httpClient.PostAsync(uri, jsonPayload);
-                return httpResponse;
-            }
+            var request = new HttpRequestMessage(HttpMethod.Post, new Uri(Route));
+            if (!string.IsNullOrEmpty(Token))
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", Token);
+            request.Content = new StringContent(JsonConvert.SerializeObject(Model), Encoding.UTF8, "application/json");
+            return await _httpClient.SendAsync(request);
         }
         /// <summary>
         /// Triggers a Post request to the specified route with headers and retrieves the result as an HTTP Response Message
@@ -56,18 +47,11 @@ namespace HttpClientServiceHelper
         /// <returns>an HTTP Response Message</returns>
         public static async Task<HttpResponseMessage> PostAsync(string Route, object Model, List<Header> Headers)
         {
-            using (HttpClient httpClient = new HttpClient())
-            {
-                var uri = new Uri(Route);
-                foreach (var Header in Headers)
-                {
-                    httpClient.DefaultRequestHeaders.Add(Header.Name, Header.Value);
-                }
-                string jsonTransport = JsonConvert.SerializeObject(Model);
-                var jsonPayload = new StringContent(jsonTransport, Encoding.UTF8, "application/json");
-                var httpResponse = await httpClient.PostAsync(uri, jsonPayload);
-                return httpResponse;
-            }
+            var request = new HttpRequestMessage(HttpMethod.Post, new Uri(Route));
+            foreach (var Header in Headers)
+                request.Headers.Add(Header.Name, Header.Value);
+            request.Content = new StringContent(JsonConvert.SerializeObject(Model), Encoding.UTF8, "application/json");
+            return await _httpClient.SendAsync(request);
         }
         /// <summary>
         /// Triggers a Post request to the specified route with headers and authorization and retrieves the result as an HTTP Response Message
@@ -79,20 +63,14 @@ namespace HttpClientServiceHelper
         /// <returns>an HTTP Response Message</returns>
         public static async Task<HttpResponseMessage> PostAsync(string Route, object Model, List<Header> Headers, Authorization Authorization)
         {
-            using (HttpClient httpClient = new HttpClient())
-            {
-                var uri = new Uri(Route);
-                foreach (var Header in Headers)
-                {
-                    httpClient.DefaultRequestHeaders.Add(Header.Name, Header.Value);
-                }
-                httpClient.DefaultRequestHeaders.Authorization = string.IsNullOrEmpty(Authorization.Parameter) ?
-                    new AuthenticationHeaderValue(Authorization.Scheme) : new AuthenticationHeaderValue(Authorization.Scheme, Authorization.Parameter);
-                string jsonTransport = JsonConvert.SerializeObject(Model);
-                var jsonPayload = new StringContent(jsonTransport, Encoding.UTF8, "application/json");
-                var httpResponse = await httpClient.PostAsync(uri, jsonPayload);
-                return httpResponse;
-            }
+            var request = new HttpRequestMessage(HttpMethod.Post, new Uri(Route));
+            foreach (var Header in Headers)
+                request.Headers.Add(Header.Name, Header.Value);
+            request.Headers.Authorization = string.IsNullOrEmpty(Authorization.Parameter)
+                ? new AuthenticationHeaderValue(Authorization.Scheme)
+                : new AuthenticationHeaderValue(Authorization.Scheme, Authorization.Parameter);
+            request.Content = new StringContent(JsonConvert.SerializeObject(Model), Encoding.UTF8, "application/json");
+            return await _httpClient.SendAsync(request);
         }
 
         /// <summary>
@@ -103,14 +81,10 @@ namespace HttpClientServiceHelper
         /// <returns>an HTTP Response Message as string</returns>
         public static async Task<string> PostAndGetResponseAsStringAsync(string Route, object Model)
         {
-            using (HttpClient httpClient = new HttpClient())
-            {
-                var uri = new Uri(Route);
-                string jsonTransport = JsonConvert.SerializeObject(Model);
-                var jsonPayload = new StringContent(jsonTransport, Encoding.UTF8, "application/json");
-                var httpResponse = await httpClient.PostAsync(uri, jsonPayload);
-                return await httpResponse.Content.ReadAsStringAsync();
-            }
+            var request = new HttpRequestMessage(HttpMethod.Post, new Uri(Route));
+            request.Content = new StringContent(JsonConvert.SerializeObject(Model), Encoding.UTF8, "application/json");
+            var httpResponse = await _httpClient.SendAsync(request);
+            return await httpResponse.Content.ReadAsStringAsync();
         }
         /// <summary>
         /// Triggers a Post request to the specified route and retrieves the result as an HTTP Response Message.
@@ -121,15 +95,12 @@ namespace HttpClientServiceHelper
         /// <returns>an HTTP Response Message as string</returns>
         public static async Task<string> PostAndGetResponseAsStringAsync(string Route, object Model, string Token = null)
         {
-            using (HttpClient httpClient = new HttpClient())
-            {
-                var uri = new Uri(Route);
-                httpClient.DefaultRequestHeaders.Authorization = !string.IsNullOrEmpty(Token) ? new AuthenticationHeaderValue("Bearer", Token) : null;
-                string jsonTransport = JsonConvert.SerializeObject(Model);
-                var jsonPayload = new StringContent(jsonTransport, Encoding.UTF8, "application/json");
-                var httpResponse = await httpClient.PostAsync(uri, jsonPayload);
-                return await httpResponse.Content.ReadAsStringAsync();
-            }
+            var request = new HttpRequestMessage(HttpMethod.Post, new Uri(Route));
+            if (!string.IsNullOrEmpty(Token))
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", Token);
+            request.Content = new StringContent(JsonConvert.SerializeObject(Model), Encoding.UTF8, "application/json");
+            var httpResponse = await _httpClient.SendAsync(request);
+            return await httpResponse.Content.ReadAsStringAsync();
         }
         /// <summary>
         /// Triggers a Post request to the specified route with headers and retrieves the result as an HTTP Response Message
@@ -140,18 +111,12 @@ namespace HttpClientServiceHelper
         /// <returns>an HTTP Response Message as string</returns>
         public static async Task<string> PostAndGetResponseAsStringAsync(string Route, object Model, List<Header> Headers)
         {
-            using (HttpClient httpClient = new HttpClient())
-            {
-                var uri = new Uri(Route);
-                foreach (var Header in Headers)
-                {
-                    httpClient.DefaultRequestHeaders.Add(Header.Name, Header.Value);
-                }
-                string jsonTransport = JsonConvert.SerializeObject(Model);
-                var jsonPayload = new StringContent(jsonTransport, Encoding.UTF8, "application/json");
-                var httpResponse = await httpClient.PostAsync(uri, jsonPayload);
-                return await httpResponse.Content.ReadAsStringAsync();
-            }
+            var request = new HttpRequestMessage(HttpMethod.Post, new Uri(Route));
+            foreach (var Header in Headers)
+                request.Headers.Add(Header.Name, Header.Value);
+            request.Content = new StringContent(JsonConvert.SerializeObject(Model), Encoding.UTF8, "application/json");
+            var httpResponse = await _httpClient.SendAsync(request);
+            return await httpResponse.Content.ReadAsStringAsync();
         }
         /// <summary>
         /// Triggers a Post request to the specified route with headers and authorization and retrieves the result as an HTTP Response Message
@@ -163,20 +128,15 @@ namespace HttpClientServiceHelper
         /// <returns>an HTTP Response Message as string</returns>
         public static async Task<string> PostAndGetResponseAsStringAsync(string Route, object Model, List<Header> Headers, Authorization Authorization)
         {
-            using (HttpClient httpClient = new HttpClient())
-            {
-                var uri = new Uri(Route);
-                foreach (var Header in Headers)
-                {
-                    httpClient.DefaultRequestHeaders.Add(Header.Name, Header.Value);
-                }
-                httpClient.DefaultRequestHeaders.Authorization = string.IsNullOrEmpty(Authorization.Parameter) ?
-                    new AuthenticationHeaderValue(Authorization.Scheme) : new AuthenticationHeaderValue(Authorization.Scheme, Authorization.Parameter);
-                string jsonTransport = JsonConvert.SerializeObject(Model);
-                var jsonPayload = new StringContent(jsonTransport, Encoding.UTF8, "application/json");
-                var httpResponse = await httpClient.PostAsync(uri, jsonPayload);
-                return await httpResponse.Content.ReadAsStringAsync();
-            }
+            var request = new HttpRequestMessage(HttpMethod.Post, new Uri(Route));
+            foreach (var Header in Headers)
+                request.Headers.Add(Header.Name, Header.Value);
+            request.Headers.Authorization = string.IsNullOrEmpty(Authorization.Parameter)
+                ? new AuthenticationHeaderValue(Authorization.Scheme)
+                : new AuthenticationHeaderValue(Authorization.Scheme, Authorization.Parameter);
+            request.Content = new StringContent(JsonConvert.SerializeObject(Model), Encoding.UTF8, "application/json");
+            var httpResponse = await _httpClient.SendAsync(request);
+            return await httpResponse.Content.ReadAsStringAsync();
         }
         #region TODO
         /// <summary>

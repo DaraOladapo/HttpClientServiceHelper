@@ -1,4 +1,4 @@
-﻿using HttpClientServiceHelper.Models;
+using HttpClientServiceHelper.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -13,6 +13,8 @@ namespace HttpClientServiceHelper
     /// </summary>
     public partial class HttpClientHelper
     {
+        private static readonly HttpClient _httpClient = new HttpClient();
+
         #region TODO
         /// <summary>
         /// Triggers a GET request to the specified route and retrieves the result as a generic object response.
@@ -192,11 +194,8 @@ namespace HttpClientServiceHelper
         /// <returns>An HTTP Reponse Message</returns>
         public static async Task<HttpResponseMessage> GetAsync(string Route)
         {
-            using (HttpClient httpClient = new HttpClient())
-            {
-                var httpResponse = await httpClient.GetAsync(new Uri(Route));
-                return httpResponse;
-            }
+            var request = new HttpRequestMessage(HttpMethod.Get, new Uri(Route));
+            return await _httpClient.SendAsync(request);
         }
         /// <summary>
         /// Triggers a GET request to the specified route with a Bearer Token and retrieves the result as an HTTP Response Message.
@@ -206,12 +205,10 @@ namespace HttpClientServiceHelper
         /// <returns>An HTTP Reponse Message</returns>
         public static async Task<HttpResponseMessage> GetAsync(string Route, string Token = null)
         {
-            using (HttpClient httpClient = new HttpClient())
-            {
-                httpClient.DefaultRequestHeaders.Authorization = !string.IsNullOrEmpty(Token) ? new AuthenticationHeaderValue("Bearer", Token) : null;
-                var httpResponse = await httpClient.GetAsync(new Uri(Route));
-                return httpResponse;
-            }
+            var request = new HttpRequestMessage(HttpMethod.Get, new Uri(Route));
+            if (!string.IsNullOrEmpty(Token))
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", Token);
+            return await _httpClient.SendAsync(request);
         }
         /// <summary>
         /// Triggers a GET request with headers to the specified route and retrieves the result as an HTTP Response Message.
@@ -221,15 +218,10 @@ namespace HttpClientServiceHelper
         /// <returns>An HTTP Reponse Message</returns>
         public static async Task<HttpResponseMessage> GetAsync(string Route, List<Header> Headers)
         {
-            using (HttpClient httpClient = new HttpClient())
-            {
-                foreach (var Header in Headers)
-                {
-                    httpClient.DefaultRequestHeaders.Add(Header.Name, Header.Value);
-                }
-                var httpResponse = await httpClient.GetAsync(new Uri(Route));
-                return httpResponse;
-            }
+            var request = new HttpRequestMessage(HttpMethod.Get, new Uri(Route));
+            foreach (var Header in Headers)
+                request.Headers.Add(Header.Name, Header.Value);
+            return await _httpClient.SendAsync(request);
         }
         /// <summary>
         /// Triggers a GET request with headers and authorization to the specified route and retrieves the result as an HTTP Response Message.
@@ -240,17 +232,13 @@ namespace HttpClientServiceHelper
         /// <returns>An HTTP Reponse Message</returns>
         public static async Task<HttpResponseMessage> GetAsync(string Route, List<Header> Headers, Authorization Authorization)
         {
-            using (HttpClient httpClient = new HttpClient())
-            {
-                foreach (var Header in Headers)
-                {
-                    httpClient.DefaultRequestHeaders.Add(Header.Name, Header.Value);
-                }
-                httpClient.DefaultRequestHeaders.Authorization = string.IsNullOrEmpty(Authorization.Parameter) ?
-                    new AuthenticationHeaderValue(Authorization.Scheme) : new AuthenticationHeaderValue(Authorization.Scheme, Authorization.Parameter);
-                var httpResponse = await httpClient.GetAsync(new Uri(Route));
-                return httpResponse;
-            }
+            var request = new HttpRequestMessage(HttpMethod.Get, new Uri(Route));
+            foreach (var Header in Headers)
+                request.Headers.Add(Header.Name, Header.Value);
+            request.Headers.Authorization = string.IsNullOrEmpty(Authorization.Parameter)
+                ? new AuthenticationHeaderValue(Authorization.Scheme)
+                : new AuthenticationHeaderValue(Authorization.Scheme, Authorization.Parameter);
+            return await _httpClient.SendAsync(request);
         }
 
         /// <summary>
@@ -260,11 +248,9 @@ namespace HttpClientServiceHelper
         /// <returns>a string format of the HTTP Response message</returns>
         public static async Task<string> GetAsStringAsync(string Route)
         {
-            using (HttpClient httpClient = new HttpClient())
-            {
-                var httpResponse = await httpClient.GetAsync(new Uri(Route));
-                return await httpResponse.Content.ReadAsStringAsync();
-            }
+            var request = new HttpRequestMessage(HttpMethod.Get, new Uri(Route));
+            var httpResponse = await _httpClient.SendAsync(request);
+            return await httpResponse.Content.ReadAsStringAsync();
         }
         /// <summary>
         /// Triggers a GET request to the specified route with a Bearer Token and retrieves the result as an HTTP Response Message.
@@ -274,12 +260,11 @@ namespace HttpClientServiceHelper
         /// <returns>a string format of the HTTP Response message</returns>
         public static async Task<string> GetAsStringAsync(string Route, string Token = null)
         {
-            using (HttpClient httpClient = new HttpClient())
-            {
-                httpClient.DefaultRequestHeaders.Authorization = !string.IsNullOrEmpty(Token) ? new AuthenticationHeaderValue("Bearer", Token) : null;
-                var httpResponse = await httpClient.GetAsync(new Uri(Route));
-                return await httpResponse.Content.ReadAsStringAsync();
-            }
+            var request = new HttpRequestMessage(HttpMethod.Get, new Uri(Route));
+            if (!string.IsNullOrEmpty(Token))
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", Token);
+            var httpResponse = await _httpClient.SendAsync(request);
+            return await httpResponse.Content.ReadAsStringAsync();
         }
         /// <summary>
         /// Triggers a GET request with headers to the specified route and retrieves the result as an HTTP Response Message.
@@ -289,15 +274,11 @@ namespace HttpClientServiceHelper
         /// <returns>a string format of the HTTP Response message</returns>
         public static async Task<string> GetAsStringAsync(string Route, List<Header> Headers)
         {
-            using (HttpClient httpClient = new HttpClient())
-            {
-                foreach (var Header in Headers)
-                {
-                    httpClient.DefaultRequestHeaders.Add(Header.Name, Header.Value);
-                }
-                var httpResponse = await httpClient.GetAsync(new Uri(Route));
-                return await httpResponse.Content.ReadAsStringAsync();
-            }
+            var request = new HttpRequestMessage(HttpMethod.Get, new Uri(Route));
+            foreach (var Header in Headers)
+                request.Headers.Add(Header.Name, Header.Value);
+            var httpResponse = await _httpClient.SendAsync(request);
+            return await httpResponse.Content.ReadAsStringAsync();
         }
         /// <summary>
         /// Triggers a GET request with headers and authorization to the specified route and retrieves the result as an HTTP Response Message.
@@ -308,17 +289,14 @@ namespace HttpClientServiceHelper
         /// <returns>a string format of the HTTP Response message</returns>
         public static async Task<string> GetAsStringAsync(string Route, List<Header> Headers, Authorization Authorization)
         {
-            using (HttpClient httpClient = new HttpClient())
-            {
-                foreach (var Header in Headers)
-                {
-                    httpClient.DefaultRequestHeaders.Add(Header.Name, Header.Value);
-                }
-                httpClient.DefaultRequestHeaders.Authorization = string.IsNullOrEmpty(Authorization.Parameter) ?
-                    new AuthenticationHeaderValue(Authorization.Scheme) : new AuthenticationHeaderValue(Authorization.Scheme, Authorization.Parameter);
-                var httpResponse = await httpClient.GetAsync(new Uri(Route));
-                return await httpResponse.Content.ReadAsStringAsync();
-            }
+            var request = new HttpRequestMessage(HttpMethod.Get, new Uri(Route));
+            foreach (var Header in Headers)
+                request.Headers.Add(Header.Name, Header.Value);
+            request.Headers.Authorization = string.IsNullOrEmpty(Authorization.Parameter)
+                ? new AuthenticationHeaderValue(Authorization.Scheme)
+                : new AuthenticationHeaderValue(Authorization.Scheme, Authorization.Parameter);
+            var httpResponse = await _httpClient.SendAsync(request);
+            return await httpResponse.Content.ReadAsStringAsync();
         }
     }
 }
